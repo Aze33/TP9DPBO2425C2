@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Form Data Mobil</title>
+  <style>
+    :root{
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --danger: #ef4444;
+      --border: #e6e9ef;
+      --radius: 8px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);}
+    .container{max-width:700px;margin:36px auto;padding:18px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+    h1{margin:0 0 8px;font-size:18px}
+    p.lead{margin:0 0 16px;color:var(--muted);font-size:13px}
+
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="number"], select{width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;font-size:14px;box-sizing:border-box}
+
+    .full{grid-column:1/-1}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+    .btn{padding:10px 14px;border-radius:8px;border:1px solid transparent;font-size:14px;cursor:pointer;text-decoration:none}
+    .btn-primary{background:var(--accent);color:#fff;border:none}
+    .btn-muted{background:transparent;border:1px solid var(--border);color:var(--muted)}
+    
+    @media (max-width:640px){
+      form{grid-template-columns:1fr}
+      .actions{justify-content:space-between}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Form Data Mobil</h1>
+      <p class="lead">Masukkan data teknis mobil balap.</p>
+
+      <form method="post" action="index.php?page=mobil" novalidate>
+        
+        <input type="hidden" name="action" value="add">
+        <input type="hidden" name="id" value="">
+
+        <div class="full">
+          <label for="model">Model Sasis</label>
+          <input id="model" name="model" type="text" placeholder="Contoh: Red Bull RB20" required>
+        </div>
+
+        <div class="full">
+          <label for="mesin">Mesin / Power Unit</label>
+          <input id="mesin" name="mesin" type="text" placeholder="Contoh: Honda RBPTH002" required>
+        </div>
+
+        <div>
+          <label for="top_speed">Top Speed (km/h)</label>
+          <input id="top_speed" name="top_speed" type="number" min="0" placeholder="350">
+        </div>
+
+        <div>
+          <label for="tahun">Tahun Musim</label>
+          <input id="tahun" name="tahun" type="number" min="1950" placeholder="2024">
+        </div>
+
+        <div class="full actions">
+          <a href="index.php?page=mobil" class="btn btn-muted">Batal</a>
+          <button type="submit" class="btn btn-primary">Simpan Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Simple Validation
+    (function(){
+      var form = document.querySelector('form');
+      if(!form) return;
+      form.addEventListener('submit', function(e){
+        var model = document.getElementById('model');
+        var mesin = document.getElementById('mesin');
+        
+        if(!model.value.trim()){
+          alert('Model Sasis harus diisi!');
+          model.focus();
+          e.preventDefault();
+          return false;
+        }
+        if(!mesin.value.trim()){
+          alert('Info Mesin harus diisi!');
+          mesin.focus();
+          e.preventDefault();
+          return false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

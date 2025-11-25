@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Data Mobil Balap</title>
+  <style>
+    :root{
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --danger: #ef4444;
+      --border: #e6e9ef;
+      --radius: 8px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: light;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);}
+    .container{max-width:980px;margin:36px auto;padding:18px;}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow: 0 1px 2px rgba(16,24,40,0.03);}
+    h1{margin:0 0 12px 0;font-size:18px}
+    
+    /* Navigation Tabs */
+    .nav{margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; display:flex; gap:10px;}
+    .nav a{text-decoration:none; color: #333; font-size:14px; font-weight:500;}
+
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead th{ text-align:left;padding:12px 10px;background:transparent;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+    tbody td{padding:12px 10px;border-bottom:1px solid var(--bg);vertical-align:middle}
+    
+    .col-actions{width:170px;text-align:right}
+    .btn{display:inline-block;padding:8px 10px;border-radius:6px;border:1px solid transparent;font-size:13px;cursor:pointer;text-decoration:none;}
+    .btn-edit{color:var(--accent);}
+    .btn-delete{color:var(--danger);margin-left:8px;background:transparent;border:none;}
+    .btn-add{background:var(--accent);color:#fff;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      
+      <div class="nav">
+        <a href="index.php?page=pembalap" class="btn" style="background:#eee;">🏁 Data Pembalap</a>
+        <a href="index.php?page=mobil" class="btn" style="background:#dbeafe; color:#1e40af;">🏎️ Data Mobil (Active)</a>
+      </div>
+
+      <h1>Daftar Spesifikasi Mobil</h1>
+
+      <div style="overflow:auto;">
+        <table role="table">
+          <thead>
+            <tr>
+              <th width="50">No</th>
+              <th>Model Mobil</th>
+              <th>Mesin / Power Unit</th>
+              <th>Top Speed</th>
+              <th>Tahun</th>
+              <th class="col-actions">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            DATA_TABEL
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
+        <div style="color:var(--muted);font-size:13px">Data Terupdate</div>
+        <div>
+          <a href="index.php?page=mobil&screen=add" class="btn btn-add">+ Tambah Mobil</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Script Delete
+    document.addEventListener('click', function(e){
+      var d = e.target.closest && e.target.closest('.btn-delete');
+      if(!d) return;
+      var id = d.getAttribute('data-id');
+      if(confirm('Hapus data mobil ini?')){
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'index.php?page=mobil'; // Pastikan action ke page mobil
+        
+        var a = document.createElement('input'); a.type='hidden'; a.name='action'; a.value='delete';
+        var i = document.createElement('input'); i.type='hidden'; i.name='id'; i.value=id;
+        
+        form.appendChild(a); form.appendChild(i);
+        document.body.appendChild(form);
+        form.submit();
+      }
+    });
+  </script>
+</body>
+</html>
